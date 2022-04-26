@@ -10,9 +10,9 @@ export class FindAllProductsService {
     private readonly productsService: Model<Products>,
   ) {}
 
-  async execute(){
+  async execute() {
     const isPopulated = [];
 
-    return isPopulated ? await this.productsService.find() : []
+    return isPopulated ? await this.productsService.find() : [];
   }
 }

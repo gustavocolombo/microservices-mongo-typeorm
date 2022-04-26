@@ -3,12 +3,14 @@ import { ICreateProductsDTO } from '../dtos/ICreateProductsDTO';
 import { CreateProductsService } from '../services/create-products.service';
 import { FindAllProductsService } from '../services/find-all-products.service';
 import { EventPattern } from '@nestjs/microservices';
+import { SendMailProviderService } from '../jobs/sendmail-provider.service';
 
 @Controller('products')
 export class ProductsController {
   constructor(
     private createProductService: CreateProductsService,
     private findAllProductsService: FindAllProductsService,
+    private sendMailService: SendMailProviderService
   ) {}
 
   @Post('/create')
@@ -26,6 +28,8 @@ export class ProductsController {
     console.log('caindo aqui');
 
     const result = await this.createProductService.execute(product);
+
+    await this.sendMailService.execute(product);
 
     console.log('result', result);
   }
